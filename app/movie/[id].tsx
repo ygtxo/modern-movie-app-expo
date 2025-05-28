@@ -1,22 +1,13 @@
-import { API_KEY, BASE_URL } from "@/contants";
+import { API_KEY, BASE_URL, Movie } from "@/contants";
+import { useMovieStore } from "@/store/movieStore";
 import { Ionicons } from "@expo/vector-icons";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-
-type Movie = {
-  id: number;
-  title: string;
-  overview: string;
-  poster_path: string;
-  vote_average: number;
-  release_date: string;
-};
 
 const Page = () => {
   const { id: movieID } = useLocalSearchParams();
-  const [movie, setMovie] = useState<Movie | null>(null);
-  const [addedToFavorites, setAddedToFavorites] = useState(false);
+  const { movie, setMovie } = useMovieStore();
   const router = useRouter();
 
   useEffect(() => {
@@ -74,16 +65,17 @@ const Page = () => {
         />
         <TouchableOpacity
           onPress={() => {
-            if (addedToFavorites) {
-              setAddedToFavorites(false);
-            } else {
-              setAddedToFavorites(true);
-            }
+            // if (addedToFavorites) {
+            //   setAddedToFavorites(false);
+            // } else {
+            //   setAddedToFavorites(true);
+            // }
           }}
           style={styles.favoriteButton}
         >
           <Ionicons
-            name={addedToFavorites ? "heart" : "heart-outline"}
+            name="heart"
+            // name={addedToFavorites ? "heart" : "heart-outline"}
             size={30}
             color="red"
           />
@@ -92,29 +84,14 @@ const Page = () => {
 
       <Text style={styles.movieOverview}>{movie.overview}</Text>
 
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          marginTop: "auto",
-          alignItems: "center",
-          width: "100%",
-          padding: 20,
-        }}
-      >
+      <View style={styles.descriptionDetail}>
         <View style={styles.ratingContainer}>
           <Text style={styles.ratingLabel}>Rating:</Text>
           <Text style={styles.ratingValue}>
             {Math.round(movie.vote_average)} ⭐
           </Text>
         </View>
-        <Text
-          style={{
-            fontWeight: "bold",
-            fontSize: 18,
-            color: "#595d61",
-          }}
-        >
+        <Text style={styles.date}>
           {new Date(movie.release_date)
             .toLocaleDateString("en-GB")
             .split("/")
@@ -149,29 +126,18 @@ const styles = StyleSheet.create({
     top: 0,
     right: 60,
   },
-  movieTitle: {
-    fontWeight: "bold",
-    textAlign: "center",
-  },
   movieOverview: {
     textAlign: "left",
     fontSize: 16,
     color: "#595d61",
   },
-  movieFooter: {
-    position: "absolute",
-    bottom: 0,
-    right: 0,
-    left: 0,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    paddingTop: 10,
-    paddingBottom: 20,
-    paddingHorizontal: 20,
-    height: 90,
+  descriptionDetail: {
     flexDirection: "row",
     justifyContent: "space-between",
+    marginTop: "auto",
     alignItems: "center",
-    backgroundColor: "#fff",
+    width: "100%",
+    padding: 20,
   },
   ratingContainer: {
     flexDirection: "row",
@@ -185,5 +151,10 @@ const styles = StyleSheet.create({
   },
   ratingValue: {
     fontSize: 15,
+  },
+  date: {
+    fontWeight: "bold",
+    fontSize: 18,
+    color: "#595d61",
   },
 });

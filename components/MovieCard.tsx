@@ -1,52 +1,72 @@
+import { Movie } from "@/contants";
+import { useRouter } from "expo-router";
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import RatingStars from "./RatingStars";
 
-type MovieCardProps = {
-  title: string;
-  posterPath: string;
-  releaseDate: string;
-};
-
-const MovieCard: React.FC<MovieCardProps> = ({
-  title,
-  posterPath,
-  releaseDate,
-}) => {
-  const releaseYear = new Date(releaseDate).getFullYear();
-  const imageUrl = `https://image.tmdb.org/t/p/w500${posterPath}`;
+const MovieCard = ({ item }: { item: Movie }) => {
+  const router = useRouter();
 
   return (
-    <View style={styles.card}>
+    <TouchableOpacity
+      onPress={() => {
+        router.push({
+          pathname: "/movie/[id]",
+          params: { id: item.id.toString() },
+        });
+      }}
+      style={styles.container}
+    >
       <Image
-        source={{ uri: imageUrl }}
+        source={{
+          uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
+        }}
         style={styles.image}
         resizeMode="cover"
       />
-      <Text style={styles.title}>
-        {title} ({releaseYear})
-      </Text>
-    </View>
+      <View style={styles.movieDetailContainer}>
+        <View
+          style={{
+            flexDirection: "column",
+            width: 200,
+            gap: 4,
+          }}
+        >
+          <Text style={styles.title}>{item.title}</Text>
+          <Text>{new Date(item.release_date).getFullYear()}</Text>
+          <Text style={styles.description}>
+            {item.overview.length > 50
+              ? `${item.overview.substring(0, 50)}...`
+              : item.overview}
+          </Text>
+        </View>
+        <RatingStars vote={item.vote_average} />
+      </View>
+    </TouchableOpacity>
   );
 };
 
+export default MovieCard;
+
 const styles = StyleSheet.create({
-  card: {
-    marginBottom: 16,
-    borderRadius: 8,
-    overflow: "hidden",
-    backgroundColor: "#fff",
-    elevation: 3,
+  container: {
+    flexDirection: "row",
+    gap: 20,
+    padding: 20,
+    marginBottom: 10,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: "#595d61",
   },
-  image: {
-    width: "100%",
-    height: 200,
+  image: { width: 100, height: 150, borderRadius: 8 },
+  movieDetailContainer: {
+    flexDirection: "column",
+    gap: 8,
+    justifyContent: "space-between",
+    alignItems: "flex-start",
   },
   title: {
     fontSize: 16,
     fontWeight: "bold",
-    padding: 10,
-    color: "#333",
   },
+  description: { color: "#595d61", width: 200, marginVertical: 10 },
 });
-
-export default MovieCard;

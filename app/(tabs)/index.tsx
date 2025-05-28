@@ -1,24 +1,21 @@
-import RatingStars from "@/components/RatingStars";
+import MovieCard from "@/components/MovieCard";
 import Title from "@/components/Title";
 import { API_KEY, BASE_URL } from "@/contants";
+import { useMovieStore } from "@/store/movieStore";
 import { useRouter } from "expo-router";
 
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
-  Image,
   SafeAreaView,
   StyleSheet,
-  Text,
   TextInput,
-  TouchableOpacity,
   View,
 } from "react-native";
 
 const HomeScreen = () => {
-  const [movies, setMovies] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const { movies, setMovies, isLoading, setIsLoading } = useMovieStore();
   const [searchText, setSearchText] = useState<string>("");
   const router = useRouter();
 
@@ -32,7 +29,7 @@ const HomeScreen = () => {
     } catch (error) {
       console.error("Error fetching movies:", error);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -59,7 +56,7 @@ const HomeScreen = () => {
     }
   }, [searchText]);
 
-  if (loading) {
+  if (isLoading) {
     return (
       <View style={styles.centered}>
         <ActivityIndicator size="large" color="#000" />
@@ -84,66 +81,7 @@ const HomeScreen = () => {
             padding: 10,
           }}
           keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() => {
-                router.push({
-                  pathname: "/movie/[id]",
-                  params: { id: item.id.toString() },
-                });
-              }}
-              style={{
-                flexDirection: "row",
-                gap: 20,
-                padding: 20,
-                marginBottom: 10,
-                borderBottomWidth: StyleSheet.hairlineWidth,
-                borderColor: "#595d61",
-              }}
-            >
-              <Image
-                source={{
-                  uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
-                }}
-                style={{ width: 100, height: 150, borderRadius: 8 }}
-                resizeMode="cover"
-              />
-              <View
-                style={{
-                  flexDirection: "column",
-                  gap: 8,
-                  justifyContent: "space-between",
-                  alignItems: "flex-start",
-                }}
-              >
-                <View
-                  style={{
-                    flexDirection: "column",
-                    width: 200,
-                    gap: 4,
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      fontWeight: "bold",
-                    }}
-                  >
-                    {item.title}
-                  </Text>
-                  <Text>{new Date(item.release_date).getFullYear()}</Text>
-                  <Text
-                    style={{ color: "#595d61", width: 200, marginVertical: 10 }}
-                  >
-                    {item.overview.length > 50
-                      ? `${item.overview.substring(0, 50)}...`
-                      : item.overview}
-                  </Text>
-                </View>
-                <RatingStars vote={item.vote_average} />
-              </View>
-            </TouchableOpacity>
-          )}
+          renderItem={({ item }) => <MovieCard item={item} />}
           contentContainerStyle={{ paddingBottom: 16 }}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
