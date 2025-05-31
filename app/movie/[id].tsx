@@ -120,19 +120,20 @@ const styles = StyleSheet.create({
     padding: 30,
     alignItems: "center",
     backgroundColor: "#fff",
+    paddingBottom: 20,
   },
   imageWrapper: {
     position: "relative",
   },
   movieImage: {
-    height: 350,
-    width: 450,
+    height: 250,
+    width: 350,
     resizeMode: "contain",
   },
   favoriteButton: {
     position: "absolute",
     top: 0,
-    right: 60,
+    right: 30,
   },
   movieOverview: {
     textAlign: "left",

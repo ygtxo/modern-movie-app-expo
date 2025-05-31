@@ -9,6 +9,10 @@ const FavoritesScreen = () => {
   const { favorites } = useMovieStore();
   const [searchText, setSearchText] = useState<string>("");
 
+  const filteredFavorites = favorites.filter((favorite) =>
+    favorite.title.toLowerCase().includes(searchText.toLowerCase())
+  );
+
   return (
     <SafeAreaView style={styles.container}>
       <View>
@@ -20,7 +24,7 @@ const FavoritesScreen = () => {
         />
 
         <FlatList
-          data={favorites}
+          data={filteredFavorites}
           renderItem={({ item }) => {
             return <FavoriteCard favorite={item} />;
           }}
