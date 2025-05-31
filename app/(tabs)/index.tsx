@@ -1,4 +1,5 @@
 import MovieCard from "@/components/MovieCard";
+import SearchInput from "@/components/SearchInput";
 import Title from "@/components/Title";
 import { API_KEY, BASE_URL } from "@/contants";
 import { useMovieStore } from "@/store/movieStore";
@@ -10,7 +11,6 @@ import {
   FlatList,
   SafeAreaView,
   StyleSheet,
-  TextInput,
   View,
 } from "react-native";
 
@@ -68,21 +68,16 @@ const HomeScreen = () => {
     <SafeAreaView style={styles.wrapper}>
       <View>
         <Title text="Home" />
-        <TextInput
-          value={searchText}
-          onChangeText={setSearchText}
-          placeholder="Search movies..."
-          style={styles.input}
-          placeholderTextColor="#595d61"
+        <SearchInput
+          searchText={searchText}
+          setSearchText={setSearchText}
+          placeholderText="Search movies..."
         />
         <FlatList
           data={movies}
-          style={{
-            padding: 10,
-          }}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => <MovieCard item={item} />}
-          contentContainerStyle={{ paddingBottom: 16 }}
+          contentContainerStyle={{ paddingBottom: 160 }}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
         />
@@ -98,16 +93,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
   },
-  input: {
-    marginTop: 10,
-    marginBottom: 20,
-    marginHorizontal: 16,
-    padding: 12,
-    borderBottomWidth: 0.5,
-    borderColor: "#595d61",
-    borderRadius: 8,
-    fontSize: 14,
-  },
+
   container: {
     paddingHorizontal: 16,
     paddingBottom: 16,
