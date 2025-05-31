@@ -7,7 +7,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const Page = () => {
   const { id: movieID } = useLocalSearchParams();
-  const { movie, setMovie } = useMovieStore();
+  const { movie, setMovie, favorites, setFavorites } = useMovieStore();
   const router = useRouter();
 
   useEffect(() => {
@@ -65,17 +65,25 @@ const Page = () => {
         />
         <TouchableOpacity
           onPress={() => {
-            // if (addedToFavorites) {
-            //   setAddedToFavorites(false);
-            // } else {
-            //   setAddedToFavorites(true);
-            // }
+            const isFavorite = favorites.some(
+              (favMovie: Movie) => favMovie.id === movie.id
+            );
+            if (isFavorite) {
+              setFavorites(
+                favorites.filter((favMovie: Movie) => favMovie.id !== movie.id)
+              );
+            } else {
+              setFavorites([...favorites, movie]);
+            }
           }}
           style={styles.favoriteButton}
         >
           <Ionicons
-            name="heart"
-            // name={addedToFavorites ? "heart" : "heart-outline"}
+            name={
+              favorites.some((favMovie: Movie) => favMovie.id === movie.id)
+                ? "heart"
+                : "heart-outline"
+            }
             size={30}
             color="red"
           />
