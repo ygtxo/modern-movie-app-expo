@@ -23,3 +23,15 @@ Expo Router kullanılarak modern, dosya tabanlı routing sağlanır.
 
 ✅ **Tip Güvenliği**  
 TypeScript ile tüm veri tipleri güvence altına alınır. Özellikle API’den gelen veri modelleri için type ve interface tanımlamaları yapılmıştır.
+
+## 🎥 Uygulama Ekran Görüntüsü
+
+<img src="https://github.com/user-attachments/assets/ad8c4255-ca86-4f78-8465-cdd87e92b33c" alt="Poster" width="300" style="margin-right: 50px;" />
+
+<img src="https://github.com/user-attachments/assets/451546d5-a133-417c-8448-845d24146e1d" alt="Poster" width="300" style="margin-right: 50px;"/>
+
+<img src="https://github.com/user-attachments/assets/e6700cdc-b863-4e9a-9ad5-17f8b9ad123c" alt="Poster" width="300" style="margin-right: 50px;"/>
+
+<img src="https://github.com/user-attachments/assets/3217e860-32a3-4ff8-a1df-527cfa0e1317" alt="Poster" width="300" style="margin-right: 50px;"/>
+
+
