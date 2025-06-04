@@ -32,6 +32,6 @@ TypeScript ile tüm veri tipleri güvence altına alınır. Özellikle API’den
 
 <img src="https://github.com/user-attachments/assets/e6700cdc-b863-4e9a-9ad5-17f8b9ad123c" alt="Poster" width="300" style="margin-right: 50px;"/>
 
-<img src="https://github.com/user-attachments/assets/3217e860-32a3-4ff8-a1df-527cfa0e1317" alt="Poster" width="300" style="margin-right: 50px;"/>
+<img src="https://github.com/user-attachments/assets/0b173323-db11-4864-bd45-f5e51c9bfbec" alt="Poster" width="300" style="margin-right: 50px;"/>
 
 
